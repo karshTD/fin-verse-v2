@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | FinSecure</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        header {
+            background: #17324d;
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .brand { font-size: 22px; font-weight: bold; }
+        .brand small {
+            display: block;
+            margin-top: 5px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .account { font-size: 13px; color: #e2e8f0; }
+
+        nav {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 5%;
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            display: inline-block;
+            padding: 16px 0;
+            color: #475569;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav a.active, nav a:hover { color: #1769aa; }
+
+        main { max-width: 1150px; margin: 32px auto; padding: 0 22px; }
+
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        h1 { margin: 0 0 9px; color: #17324d; font-size: 28px; }
+        .muted { color: #64748b; font-size: 14px; line-height: 1.6; }
+
+        .button {
+            display: inline-block;
+            padding: 11px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .primary { background: #1769aa; color: white; }
+        .primary:hover { background: #12558b; }
+
+        .notice {
+            margin: 22px 0;
+            padding: 14px 16px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 9px;
+            color: #1e40af;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 16px;
+            margin: 22px 0 28px;
+        }
+
+        .stat, .panel {
+            padding: 21px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+        }
+
+        .stat-label { color: #64748b; font-size: 13px; }
+        .stat-number { margin-top: 12px; color: #17324d; font-size: 27px; font-weight: bold; }
+
+        .panel { padding: 0; overflow: hidden; }
+
+        .tools {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 18px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tools input, .tools select {
+            min-width: 180px;
+            flex: 1;
+            padding: 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+        }
+
+        .table-wrap { overflow-x: auto; }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+
+        th, td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #e2e8f0;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        th { background: #f8fafc; color: #64748b; }
+        tbody tr:last-child td { border-bottom: none; }
+
+        .doc-name { color: #17324d; font-weight: bold; }
+        .doc-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 36px;
+            margin-right: 10px;
+            border-radius: 6px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-weight: bold;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .view-link { color: #1769aa; text-decoration: none; font-weight: bold; }
+        .view-link:hover { text-decoration: underline; }
+
+        #emptyMessage {
+            display: none;
+            padding: 28px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        footer { padding: 25px; text-align: center; color: #94a3b8; font-size: 12px; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 24px; }
+            main { margin-top: 22px; padding: 0 14px; }
+            nav { gap: 18px; }
+            .tools input, .tools select { min-width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="brand">
+        FinSecure
+        <small>Accounting Services · Document Security Portal</small>
+    </div>
+    <div class="account">Signed in as {{ email }}</div>
+</header>
+
+<nav>
+    <a class="active" href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('upload') }}">Upload Document</a>
+    <a href="{{ url_for('users') }}">Users & Access</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</nav>
+
+<main>
+    <div class="heading">
+        <div>
+            <h1>Document Dashboard</h1>
+            <div class="muted">Overview of financial documents and sample records.</div>
+        </div>
+        <a class="button primary" href="{{ url_for('upload') }}">+ Upload Document</a>
+    </div>
+
+    <div class="notice">
+        <strong>Local demonstration:</strong> All records are sample data.
+        No documents are stored in AWS, and the status labels do not indicate
+        verified cloud security.
+    </div>
+
+    <section class="stats">
+        <div class="stat">
+            <div class="stat-label">Total Demo Documents</div>
+            <div class="stat-number">{{ documents|length }}</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">Document Categories</div>
+            <div class="stat-number">3</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">Storage</div>
+            <div class="stat-number" style="font-size:21px;">Local Demo</div>
+        </div>
+    </section>
+
+    <h2 style="font-size:20px;color:#17324d;">Financial Documents</h2>
+
+    <section class="panel">
+        <div class="tools">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search document, owner or category..."
+                aria-label="Search documents"
+            >
+
+            <select id="categoryFilter" aria-label="Filter by category">
+                <option value="">All Categories</option>
+                <option value="Financial Report">Financial Report</option>
+                <option value="Tax Summary">Tax Summary</option>
+                <option value="Audit Report">Audit Report</option>
+            </select>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>DOCUMENT</th>
+                        <th>CATEGORY</th>
+                        <th>OWNER</th>
+                        <th>DATE ADDED</th>
+                        <th>STATUS</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="documentRows">
+                    {% for doc in documents %}
+                    <tr
+                        data-search="{{ (doc.name ~ ' ' ~ doc.owner ~ ' ' ~ doc.category)|lower }}"
+                        data-category="{{ doc.category }}"
+                    >
+                        <td>
+                            <span class="doc-icon">PDF</span>
+                            <span class="doc-name">{{ doc.name }}</span>
+                        </td>
+                        <td>{{ doc.category }}</td>
+                        <td>{{ doc.owner }}</td>
+                        <td>{{ doc.date }}</td>
+                        <td><span class="status">{{ doc.status }}</span></td>
+                        <td>
+                            <a class="view-link"
+                               href="{{ url_for('document_details', document_id=doc.id) }}">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="emptyMessage">No matching documents found.</div>
+    </section>
+</main>
+
+<footer>FinSecure Accounting Services · Cloud Security Mini Project</footer>
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const rows = Array.from(document.querySelectorAll("#documentRows tr"));
+    const emptyMessage = document.getElementById("emptyMessage");
+
+    function filterDocuments() {
+        const query = searchInput.value.toLowerCase().trim();
+        const category = categoryFilter.value;
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const matchesText = row.dataset.search.includes(query);
+            const matchesCategory = !category || row.dataset.category === category;
+            const show = matchesText && matchesCategory;
+
+            row.style.display = show ? "" : "none";
+            if (show) visibleCount++;
+        });
+
+        emptyMessage.style.display = visibleCount === 0 ? "block" : "none";
+    }
+
+    searchInput.addEventListener("input", filterDocuments);
+    categoryFilter.addEventListener("change", filterDocuments);
+</script>
+</body>
+</html>

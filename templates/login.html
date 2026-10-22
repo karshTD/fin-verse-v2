@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | FinSecure</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #102b46, #1769aa);
+            color: #1e293b;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 36px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            background: #e7f1fb;
+            color: #1769aa;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin: 20px 0 8px;
+            color: #17324d;
+            font-size: 27px;
+        }
+
+        .subtitle {
+            margin-bottom: 25px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        label {
+            display: block;
+            margin: 17px 0 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: 2px solid #93c5fd;
+            border-color: #1769aa;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #1769aa;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #12558b;
+        }
+
+        .error {
+            margin-top: 15px;
+            padding: 11px;
+            border-radius: 7px;
+            background: #fee2e2;
+            color: #991b1b;
+            font-size: 14px;
+        }
+
+        .demo-note {
+            margin-top: 22px;
+            padding: 13px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            font-size: 13px;
+            line-height: 1.7;
+            color: #475569;
+        }
+
+        .footer {
+            margin-top: 22px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="login-card">
+        <div class="logo">F</div>
+
+        <h1>Welcome to FinSecure</h1>
+        <p class="subtitle">
+            Secure Financial Document Access System
+        </p>
+
+        <form action="{{ url_for('login') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                autocomplete="username"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit">Sign In</button>
+        </form>
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <div class="demo-note">
+            <strong>Initial administrator demo login</strong><br>
+            Email: admin@finsecure.com<br>
+            Password: FinSecure123<br>
+            Other seeded demo accounts use the same initial password. Create new users from Users &amp; Access.
+        </div>
+
+        <div class="footer">
+            FinSecure Accounting Services · Academic Project
+        </div>
+    </main>
+</body>
+</html>

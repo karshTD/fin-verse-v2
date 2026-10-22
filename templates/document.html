@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Details | FinSecure</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        header {
+            padding: 20px 5%;
+            background: #17324d;
+            color: white;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        header small {
+            display: block;
+            margin-top: 5px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            padding: 0 5%;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        nav a {
+            padding: 16px 0;
+            color: #475569;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav a:hover { color: #1769aa; }
+
+        main {
+            max-width: 1000px;
+            margin: 32px auto;
+            padding: 0 20px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 22px;
+            color: #1769aa;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        h1 { margin: 0 0 8px; color: #17324d; font-size: 27px; }
+
+        .muted { color: #64748b; font-size: 14px; line-height: 1.6; }
+
+        .notice {
+            margin: 22px 0;
+            padding: 14px;
+            border: 1px solid #bfdbfe;
+            border-radius: 9px;
+            background: #eff6ff;
+            color: #1e40af;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(250px, 0.8fr);
+            gap: 20px;
+        }
+
+        .card {
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+        }
+
+        .preview {
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
+            background: #f8fafc;
+            text-align: center;
+        }
+
+        .pdf-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 76px;
+            height: 90px;
+            border-radius: 10px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .detail {
+            padding: 14px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .detail:last-child { border-bottom: none; }
+
+        .detail-label {
+            margin-bottom: 7px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .detail-value {
+            color: #17324d;
+            font-size: 14px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 11px 15px;
+            border-radius: 8px;
+            background: #e2e8f0;
+            color: #263548;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 25px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    FinSecure
+    <small>Accounting Services · Document Details</small>
+</header>
+
+<nav>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('upload') }}">Upload Document</a>
+    <a href="{{ url_for('users') }}">Users & Access</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</nav>
+
+<main>
+    <a class="back" href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+
+    <h1>Document Details</h1>
+    <p class="muted">View the metadata for this sample document.</p>
+
+    <div class="notice">
+        <strong>Demo preview:</strong> This page displays sample metadata only.
+        No PDF is stored or available to preview or download.
+    </div>
+
+    <div class="layout">
+        <section class="card">
+            <h2 style="margin-top:0;font-size:18px;">Document Preview</h2>
+
+            <div class="preview">
+                <div class="pdf-icon">PDF</div>
+                <h3>{{ document.name }}</h3>
+                <p class="muted">
+                    A real preview will be available after secure file storage
+                    and authorized retrieval are implemented.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 style="margin-top:0;font-size:18px;">Document Information</h2>
+
+            <div class="detail">
+                <div class="detail-label">Document Name</div>
+                <div class="detail-value">{{ document.name }}</div>
+            </div>
+
+            <div class="detail">
+                <div class="detail-label">Category</div>
+                <div class="detail-value">{{ document.category }}</div>
+            </div>
+
+            <div class="detail">
+                <div class="detail-label">Owner</div>
+                <div class="detail-value">{{ document.owner }}</div>
+            </div>
+
+            <div class="detail">
+                <div class="detail-label">Date Added</div>
+                <div class="detail-value">{{ document.date }}</div>
+            </div>
+
+            <div class="detail">
+                <div class="detail-label">File Size</div>
+                <div class="detail-value">{{ document.size }}</div>
+            </div>
+
+            <div class="detail">
+                <div class="detail-label">Demo Status</div>
+                <div class="detail-value">{{ document.status }}</div>
+            </div>
+
+            <div class="detail">
+                <div class="detail-label">Description</div>
+                <div class="detail-value">{{ document.description }}</div>
+            </div>
+
+            <a class="button" href="{{ url_for('dashboard') }}">
+                Return to Documents
+            </a>
+        </section>
+    </div>
+</main>
+
+<footer>FinSecure Accounting Services · Cloud Security Mini Project</footer>
+</body>
+</html>
